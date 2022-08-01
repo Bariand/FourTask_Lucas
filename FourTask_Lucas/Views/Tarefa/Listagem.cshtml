@@ -1,0 +1,59 @@
+﻿@model IEnumerable<FourTask_Lucas.Models.Tarefa>
+
+@{
+    ViewData["Title"] = "Listagem";
+}
+
+<h1>Listagem</h1>
+
+<p>
+    <a asp-action="Criar">Criar Nova Tarefa</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Titulo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descricao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataCriacao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataLimite)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Equipe)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Titulo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataCriacao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataLimite)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Equipe.Descricao)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.TarefaId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.TarefaId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.TarefaId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

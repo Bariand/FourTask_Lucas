@@ -1,0 +1,84 @@
+﻿@model IEnumerable<FourTask_Lucas.Models.Equipe>
+
+@{
+    ViewData["Title"] = "Listagem";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Todas as Equipes</h1>
+
+ <mensagem texto="@TempData["EquipeJaInscrito"]" class="alert alert-danger"></mensagem>
+ <mensagem texto="@TempData["EquipeCadastrada"]" class="alert alert-success"></mensagem>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descricao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AreaAtuacao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataCriacao)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (Equipe equipe in Model)
+        {
+            <tr>
+                <td>
+                    @equipe.Nome
+                </td>
+                <td>
+                    @equipe.Descricao
+                </td>
+                <td>
+                    @equipe.AreaAtuacao
+                </td>
+                <td>
+                    @equipe.DataCriacao
+                </td>
+                <td>                  
+                    <button onclick="idEquipe.value = @equipe.EquipeId" type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Entrar para a Equipe
+                    </button>  
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p>
+    <a asp-action="Cadastrar">Criar nova equipe</a>
+</p>
+<p>
+    <a asp-action="Index">Voltar</a>
+</p>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmação</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Deseja realmente entrar para esta equipe?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <form asp-action="EntrarEquipe">
+                    <input type="hidden" id="idEquipe" name="id" />
+                    <input type="submit" value="Confirmar" class="btn btn-success" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

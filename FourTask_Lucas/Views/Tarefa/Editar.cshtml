@@ -1,0 +1,83 @@
+﻿@model FourTask_Lucas.Models.Tarefa
+
+@{
+    ViewData["Title"] = $"Editar {Model.Titulo}";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Editar @Model.Titulo</h1>
+
+<h4>Tarefa</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Editar">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TarefaId" />
+            <div class="form-group mb-3">
+                <label asp-for="Titulo" class="control-label"></label>
+                <input asp-for="Titulo" class="form-control" />
+                <span asp-validation-for="Titulo" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Descricao" class="control-label"></label>
+                <input asp-for="Descricao" class="form-control" />
+                <span asp-validation-for="Descricao" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="DataLimite" class="control-label"></label>
+                <input asp-for="DataLimite" class="form-control" />
+                <span asp-validation-for="DataLimite" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="DataCriacao" />
+                <span asp-validation-for="DataCriacao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="UsuarioId" />
+                <span asp-validation-for="UsuarioId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="EquipeId" />
+                <span asp-validation-for="EquipeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="TarefaId" />
+                <span asp-validation-for="TarefaId" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <button onclick="idTarefa.value = @Model.TarefaId" type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Excluir tarefa
+    </button>
+</div>
+<div>
+    <a asp-controller="Equipe" asp-action="Index">Voltar para Equipe</a>
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmação</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Deseja realmente excluir esta tarefa?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <form asp-controller="Tarefa" asp-action="Excluir">
+                    <input type="hidden" id="idTarefa" name="id" />
+                    <input type="submit" value="Confirmar" class="btn btn-success" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

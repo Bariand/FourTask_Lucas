@@ -1,0 +1,125 @@
+﻿@model EquipeTarefaModel
+
+@using FourTask_Lucas.Models
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Equipe @Model.Equipe.Nome</h1>
+
+ <mensagem texto="@TempData["TarefaJaInscrito"]" class="alert alert-danger"></mensagem>
+ <mensagem texto="@TempData["TarefaAceita"]" class="alert alert-success"></mensagem>
+ <mensagem texto="@TempData["TarefaCadastrada"]" class="alert alert-success"></mensagem>
+ <mensagem texto="@TempData["TarefaEditada"]" class="alert alert-success"></mensagem>
+ <mensagem texto="@TempData["TarefaExcluida"]" class="alert alert-success"></mensagem>
+ <mensagem texto="@TempData["EquipeInscrito"]" class="alert alert-success"></mensagem>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Descriçao
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Equipe.Descricao
+        </dd>
+        <dt class="col-sm-2">
+            Area de Atuação
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Equipe.AreaAtuacao
+        </dd>
+        <dt class="col-sm-2">
+            Data de Criação
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Equipe.DataCriacao
+        </dd>
+    </dl>
+
+    <dl class="row">
+    </dl>
+
+</div>
+<div>
+    <a asp-action="Listagem">Ver todas as equipes</a>
+</div>
+
+<h1>Tarefas desta Equipe</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Título
+            </th>
+            <th>
+                Descrição
+            </th>
+            <th>
+                Data de Criação
+            </th>
+            <th>
+                Data Limite
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.Tarefas)
+        {
+            @if (item.EquipeId == Model.Equipe.EquipeId)
+            {
+                <tr>
+                    <td>
+                        @item.Titulo
+                    </td>
+                    <td>
+                        @item.Descricao
+                    </td>
+                    <td>
+                        @item.DataCriacao
+                    </td>
+                    <td>
+                        @item.DataLimite
+                    </td>
+                    <td>
+                        <button onclick="idTarefa.value = @item.TarefaId" type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Aceitar Tarefa
+                        </button>
+                    </td>
+                    <td>
+                        <a asp-controller="Tarefa" asp-action="Editar" asp-route-id="@item.TarefaId">Editar</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+     <p>
+        <a asp-controller="Tarefa" asp-action="Cadastrar">Criar nova tarefa</a>
+    </p>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmação</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Deseja realmente aceitar esta tarefa?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <form asp-controller="Tarefa" asp-action="AceitarTarefa">
+                    <input type="hidden" id="idTarefa" name="id" />
+                    <input type="submit" value="Confirmar" class="btn btn-success" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
